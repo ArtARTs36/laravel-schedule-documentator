@@ -8,4 +8,6 @@ use ArtARTs36\LaravelScheduleDocumentator\Data\EventCollection;
 interface Documentator
 {
     public function document(EventCollection $events, string $path): Document;
+
+    public function content(EventCollection $events): DocumentContent;
 }

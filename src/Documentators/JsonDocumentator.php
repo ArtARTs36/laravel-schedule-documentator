@@ -3,17 +3,16 @@
 namespace ArtARTs36\LaravelScheduleDocumentator\Documentators;
 
 use ArtARTs36\LaravelScheduleDocumentator\Contracts\Documentator;
-use ArtARTs36\LaravelScheduleDocumentator\Data\Document;
+use ArtARTs36\LaravelScheduleDocumentator\Contracts\DocumentContent;
 use ArtARTs36\LaravelScheduleDocumentator\Data\EventCollection;
 use ArtARTs36\LaravelScheduleDocumentator\Data\EventData;
+use ArtARTs36\LaravelScheduleDocumentator\Data\StringDocumentContent;
 
 class JsonDocumentator extends AbstractDocumentator implements Documentator
 {
-    public function document(EventCollection $events, string $path): Document
+    public function content(EventCollection $events): DocumentContent
     {
-        $json = json_encode($this->eventsToArray($events), JSON_PRETTY_PRINT);
-
-        return $this->saveContent($path, $json);
+        return new StringDocumentContent(json_encode($this->eventsToArray($events), JSON_PRETTY_PRINT));
     }
 
     public function eventsToArray(EventCollection $events): array

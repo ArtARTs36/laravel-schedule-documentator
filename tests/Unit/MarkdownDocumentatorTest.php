@@ -12,9 +12,9 @@ use ArtARTs36\LaravelScheduleDocumentator\Tests\TestCase;
 class MarkdownDocumentatorTest extends TestCase
 {
     /**
-     * @covers \ArtARTs36\LaravelScheduleDocumentator\Documentators\MarkdownDocumentator::getMarkdown
+     * @covers \ArtARTs36\LaravelScheduleDocumentator\Documentators\MarkdownDocumentator::content
      */
-    public function testGetMarkdown(): void
+    public function testContent(): void
     {
         /** @var MarkdownDocumentator $documentator */
         $documentator = $this->app->make(MarkdownDocumentator::class);
@@ -28,13 +28,13 @@ class MarkdownDocumentatorTest extends TestCase
             )
         ]);
 
-        $result = $documentator->getMarkdown($events);
+        $result = $documentator->content($events);
 
         self::assertEquals("## App Console Schedule
 
 |  Command Description  | Command Signature  | Frequency |
 | ------------ | ------------ | ------------ |
 
-| test command description  | test-command  | Every minute (* * * * *)  |\n", $result);
+| test command description  | test-command  | Every minute (* * * * *)  |\n", $result->get());
     }
 }

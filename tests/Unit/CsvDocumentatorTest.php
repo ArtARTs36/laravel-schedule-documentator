@@ -12,7 +12,7 @@ use ArtARTs36\LaravelScheduleDocumentator\Tests\TestCase;
 class CsvDocumentatorTest extends TestCase
 {
     /**
-     * @covers \ArtARTs36\LaravelScheduleDocumentator\Documentators\CsvDocumentator::getCsvContent
+     * @covers \ArtARTs36\LaravelScheduleDocumentator\Documentators\CsvDocumentator::content
      */
     public function testGetCsvContent(): void
     {
@@ -28,9 +28,9 @@ class CsvDocumentatorTest extends TestCase
             )
         ]);
 
-        $csv = $documentator->getCsvContent($events);
+        $csv = $documentator->content($events);
 
         self::assertEquals("command_signature;command_description;frequency_value;frequency_clear_name;
-test-command;test command description;* * * * *;Every minute", $csv);
+test-command;test command description;* * * * *;Every minute", $csv->get());
     }
 }
