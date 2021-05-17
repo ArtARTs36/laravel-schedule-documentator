@@ -53,15 +53,6 @@ class FromKernelDataFetcher implements DataFetcher
         return new EventCollection($events);
     }
 
-    protected function getCommand(string $command): ?Command
-    {
-        if (! $this->kernel->has($command)) {
-            return null;
-        }
-
-        return $this->kernel->get($command);
-    }
-
     protected function extractCommandName(string $command, string $artisan): string
     {
         $position = mb_strpos($command, $artisan);
