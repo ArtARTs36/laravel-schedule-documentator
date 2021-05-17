@@ -18,7 +18,7 @@ class FromApplicationDataFetcherTest extends TestCase
         $fetcher = $this->app->make(FromApplicationDataFetcher::class, [
             'app' =>
                 /** @var Application $app */
-                $app = $this->app->make(Application::class, [
+                $this->app->make(Application::class, [
                     'version' => '1.0.0',
                 ])
         ]);
