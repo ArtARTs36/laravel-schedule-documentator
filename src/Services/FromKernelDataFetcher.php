@@ -11,7 +11,6 @@ use ArtARTs36\LaravelScheduleDocumentator\Data\EventData;
 use Illuminate\Console\Application;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Support\Str;
-use Symfony\Component\Console\Command\Command;
 
 class FromKernelDataFetcher implements DataFetcher
 {
