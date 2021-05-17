@@ -3,6 +3,7 @@
 namespace ArtARTs36\LaravelScheduleDocumentator\Services;
 
 use ArtARTs36\LaravelScheduleDocumentator\Contracts\DataFetcher;
+use ArtARTs36\LaravelScheduleDocumentator\Contracts\Documentator;
 use ArtARTs36\LaravelScheduleDocumentator\Data\Document;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\DocumentatorFactory;
 use Illuminate\Console\Scheduling\Schedule;
@@ -27,9 +28,11 @@ class DocGenerateHandler
 
     public function handle(string $ext, string $path): Document
     {
-        return $this
-            ->documentators
-            ->factory($ext)
-            ->document($this->data->fetch(new ScheduleAdapter($this->schedule)), $path);
+        return $this->handleOnDocumentator($this->documentators->factory($ext), $path);
+    }
+
+    public function handleOnDocumentator(Documentator $documentator, string $path): Document
+    {
+        return $documentator->document($this->data->fetch(new ScheduleAdapter($this->schedule)), $path);
     }
 }
