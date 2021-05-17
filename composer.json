@@ -1,5 +1,5 @@
 {
-    "name": "artem/laravel-schedule-documentator",
+    "name": "artarts36/laravel-schedule-documentator",
     "type": "library",
     "description": "Laravel Schedule Documentator",
     "require": {
