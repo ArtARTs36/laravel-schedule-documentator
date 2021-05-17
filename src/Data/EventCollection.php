@@ -27,6 +27,9 @@ class EventCollection implements \IteratorAggregate, \Countable
         return $this->events[array_key_first($this->events)];
     }
 
+    /**
+     * @return \ArrayIterator|iterable<\ArtARTs36\LaravelScheduleDocumentator\Data\EventData>
+     */
     public function getIterator()
     {
         return new \ArrayIterator($this->events);
