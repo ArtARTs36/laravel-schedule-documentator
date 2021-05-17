@@ -4,6 +4,7 @@ namespace ArtARTs36\LaravelScheduleDocumentator\Providers;
 
 use ArtARTs36\LaravelScheduleDocumentator\Console\Commands\GenerateDocCommand;
 use ArtARTs36\LaravelScheduleDocumentator\Contracts\DataFetcher;
+use ArtARTs36\LaravelScheduleDocumentator\Documentators\CsvDocumentator;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\DocumentatorFactory;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\MarkdownDocumentator;
 use ArtARTs36\LaravelScheduleDocumentator\Services\FromKernelDataFetcher;
@@ -28,6 +29,7 @@ class LaravelScheduleDocumentatorProvider extends ServiceProvider
 
         $this->registerDocumentatorFactory();
         $this->registerMarkdownDocumentator();
+        $this->registerCsvDocumentator();
 
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'schedule_doc');
     }
@@ -53,6 +55,16 @@ class LaravelScheduleDocumentatorProvider extends ServiceProvider
                 $this->app->make(Filesystem::class),
                 $this->app->make(Factory::class),
                 config('schedule_doc.documentators.markdown.template')
+            );
+        });
+    }
+
+    protected function registerCsvDocumentator(): void
+    {
+        $this->app->bind(CsvDocumentator::class, function () {
+            return new CsvDocumentator(
+                $this->app->make(Filesystem::class),
+                config('schedule_doc.documentators.csv.separator')
             );
         });
     }

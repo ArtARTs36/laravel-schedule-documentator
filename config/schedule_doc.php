@@ -14,5 +14,8 @@ return [
         'markdown' => [
             'template' => 'schedule_doc::doc_markdown',
         ],
+        'csv' => [
+            'separator' => ';',
+        ],
     ],
 ];

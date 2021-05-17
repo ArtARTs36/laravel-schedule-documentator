@@ -30,7 +30,7 @@ class CsvDocumentatorTest extends TestCase
 
         $csv = $documentator->content($events);
 
-        self::assertEquals("command_signature;command_description;frequency_value;frequency_clear_name;
+        self::assertEquals("command_signature;command_description;frequency_value;frequency_clear_name
 test-command;test command description;* * * * *;Every minute", $csv->get());
     }
 }
