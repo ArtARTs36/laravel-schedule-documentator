@@ -18,11 +18,14 @@ class FromKernelDataFetcherTest extends TestCase
 
         // Empty Schedule
 
-        self::assertCount(0, $fetcher->fetch($schedule = new ScheduleAdapter()));
+        /** @var ScheduleAdapter $schedule */
+        $schedule = $this->app->make(ScheduleAdapter::class);
+
+        self::assertCount(0, $fetcher->fetch($schedule));
 
         //
 
-        $schedule->command('cache:clear')->dailyAt('12:00');
+        $schedule->getSchedule()->command('cache:clear')->dailyAt('12:00');
 
         $events = $fetcher->fetch($schedule);
 

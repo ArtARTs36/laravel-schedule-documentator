@@ -2,6 +2,22 @@
 
 ---
 
+### Simple generation:
+
+```php
+$generator = app(\ArtARTs36\LaravelScheduleDocumentator\Services\DocGenerateHandler::class);
+
+$generator->handle('md', '/path/to/file.md');
+$generator->handle('json', '/path/to/file.json');
+$generator->handle('csv', '/path/to/file.csv');
+```
+
+### Console Commands
+
+|  Command  | Description |
+| ------------ | ------------ | 
+| artisan schedule:doc {format} {path} | Generate documentation |
+
 ### Available Formats
 
 |  Format  | Documentator Class |

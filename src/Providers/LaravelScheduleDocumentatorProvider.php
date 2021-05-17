@@ -2,19 +2,27 @@
 
 namespace ArtARTs36\LaravelScheduleDocumentator\Providers;
 
+use ArtARTs36\LaravelScheduleDocumentator\Console\Commands\GenerateDocCommand;
+use ArtARTs36\LaravelScheduleDocumentator\Contracts\DataFetcher;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\DocumentatorFactory;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\MarkdownDocumentator;
+use ArtARTs36\LaravelScheduleDocumentator\Services\FromKernelDataFetcher;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Factory;
 
 class LaravelScheduleDocumentatorProvider extends ServiceProvider
 {
+    public $bindings = [
+        DataFetcher::class => FromKernelDataFetcher::class,
+    ];
+
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../../config/schedule_doc.php', 'schedule_doc');
 
         if ($this->app->runningInConsole()) {
+            $this->commands(GenerateDocCommand::class);
             $this->publishSelfPackage();
         }
 
