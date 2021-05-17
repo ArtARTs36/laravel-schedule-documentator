@@ -30,5 +30,6 @@ $generator->handle('csv', '/path/to/file.csv');
 
 ### Installation:
 
-1. Run: `composer require artarts36/laravel-schedule-documentator --tag=schedule_doc`
-2. Run: 'php artisan vendor:publish'
+1. Run: `composer require artarts36/laravel-schedule-documentator`
+2. Add LaravelScheduleDocumentatorProvider into providers
+3. Run: 'php artisan vendor:publish --tag=schedule_doc'
