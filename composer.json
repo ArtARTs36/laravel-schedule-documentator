@@ -18,6 +18,14 @@
             "email": "temicska99@mail.ru"
         }
     ],
+    "scripts": {
+        "lint": [
+            "./vendor/bin/phpcs --standard=PSR2 src"
+        ],
+        "test": [
+            "./vendor/phpunit/phpunit/phpunit --configuration phpunit.xml"
+        ]
+    },
     "autoload": {
         "psr-4": {
             "ArtARTs36\\LaravelScheduleDocumentator\\": "src"
