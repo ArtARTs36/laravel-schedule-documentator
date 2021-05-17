@@ -2,26 +2,19 @@
 
 namespace ArtARTs36\LaravelScheduleDocumentator\Tests\Unit;
 
-use ArtARTs36\LaravelScheduleDocumentator\Services\FromApplicationDataFetcher;
+use ArtARTs36\LaravelScheduleDocumentator\Services\FromKernelDataFetcher;
 use ArtARTs36\LaravelScheduleDocumentator\Services\ScheduleAdapter;
 use ArtARTs36\LaravelScheduleDocumentator\Tests\TestCase;
-use Illuminate\Console\Application;
 
-class FromApplicationDataFetcherTest extends TestCase
+class FromKernelDataFetcherTest extends TestCase
 {
     /**
-     * @covers \ArtARTs36\LaravelScheduleDocumentator\Services\FromApplicationDataFetcher::fetch
+     * @covers \ArtARTs36\LaravelScheduleDocumentator\Services\FromKernelDataFetcher::fetch
      */
     public function testFetch(): void
     {
-        /** @var FromApplicationDataFetcher $fetcher */
-        $fetcher = $this->app->make(FromApplicationDataFetcher::class, [
-            'app' =>
-                /** @var Application $app */
-                $this->app->make(Application::class, [
-                    'version' => '1.0.0',
-                ])
-        ]);
+        /** @var FromKernelDataFetcher $fetcher */
+        $fetcher = $this->app->make(FromKernelDataFetcher::class);
 
         // Empty Schedule
 
