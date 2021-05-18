@@ -3,12 +3,14 @@
 namespace ArtARTs36\LaravelScheduleDocumentator\Services;
 
 use ArtARTs36\LaravelScheduleDocumentator\Contracts\DataFetcher;
+use ArtARTs36\LaravelScheduleDocumentator\Contracts\Frequency;
 use ArtARTs36\LaravelScheduleDocumentator\Contracts\FriendlySchedule;
 use ArtARTs36\LaravelScheduleDocumentator\Data\CommandData;
 use ArtARTs36\LaravelScheduleDocumentator\Data\CronFrequency;
 use ArtARTs36\LaravelScheduleDocumentator\Data\EventCollection;
 use ArtARTs36\LaravelScheduleDocumentator\Data\EventData;
 use Illuminate\Console\Application;
+use Illuminate\Console\Scheduling\Event;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Support\Str;
 
@@ -23,15 +25,14 @@ class FromKernelDataFetcher implements DataFetcher
 
     public function fetch(FriendlySchedule $schedule): EventCollection
     {
-        $commands = $this->kernel->all();
-
         if (! $schedule->isEventsExists()) {
             return new EventCollection([]);
         }
 
-        $events = [];
-
+        $commands = $this->getCommands();
         $artisanBinary = Application::artisanBinary();
+
+        $events = [];
 
         foreach ($schedule->getEvents() as $event) {
             if (! Str::contains($event->command, $artisanBinary)) {
@@ -45,11 +46,24 @@ class FromKernelDataFetcher implements DataFetcher
                     $event->command,
                     $command ? $command->getDescription() : ''
                 ),
-                new CronFrequency($event->expression)
+                $this->createFrequency($event)
             );
         }
 
         return new EventCollection($events);
+    }
+
+    /**
+     * @return array<string, \Symfony\Component\Console\Command\Command>
+     */
+    protected function getCommands(): array
+    {
+        return $this->kernel->all();
+    }
+
+    protected function createFrequency(Event $event): Frequency
+    {
+        return new CronFrequency($event->expression);
     }
 
     protected function extractCommandName(string $command, string $artisan): string
