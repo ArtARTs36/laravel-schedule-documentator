@@ -39,7 +39,7 @@ jobs:
       run: composer lint
 
     - name: Stat Analyse
-    - run: composer stat-analyse
+      run: composer stat-analyse
 
     - name: Run Tests
       run: composer test
