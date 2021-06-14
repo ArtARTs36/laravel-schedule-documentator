@@ -18,9 +18,9 @@ class FromKernelDataFetcher implements DataFetcher
 {
     protected $kernel;
 
-    public function __construct(Kernel $app)
+    public function __construct(Kernel $kernel)
     {
-        $this->kernel = $app;
+        $this->kernel = $kernel;
     }
 
     public function fetch(FriendlySchedule $schedule): EventCollection
