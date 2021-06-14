@@ -7,7 +7,7 @@ use ArtARTs36\LaravelScheduleDocumentator\Documentators\JsonDocumentator;
 use ArtARTs36\LaravelScheduleDocumentator\Exceptions\DocumentatorNotFound;
 use ArtARTs36\LaravelScheduleDocumentator\Tests\TestCase;
 
-class DocumentFactoryTest extends TestCase
+class DocumentatorFactoryTest extends TestCase
 {
     /**
      * @covers \ArtARTs36\LaravelScheduleDocumentator\Documentators\DocumentatorFactory::factory
