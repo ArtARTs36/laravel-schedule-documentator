@@ -2,6 +2,12 @@
 
 ---
 
+### Installation
+
+Run command: `composer require artarts36/laravel-schedule-documentator`
+
+---
+
 ### Simple generation:
 
 ```php
