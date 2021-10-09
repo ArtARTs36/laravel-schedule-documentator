@@ -34,6 +34,6 @@ class FromKernelDataFetcherTest extends TestCase
         $event = $events->first();
 
         self::assertEquals('Flush the application cache', $event->command->description);
-        self::assertContains('cache:clear', $event->command->signature);
+        self::assertStringContainsString('cache:clear', $event->command->signature);
     }
 }
