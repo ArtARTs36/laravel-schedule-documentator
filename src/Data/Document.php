@@ -6,9 +6,12 @@ class Document
 {
     protected $path;
 
-    public function __construct(string $path)
+    protected $fresh;
+
+    public function __construct(string $path, bool $fresh)
     {
         $this->path = $path;
+        $this->fresh = $fresh;
     }
 
     public function path(): string
@@ -29,5 +32,10 @@ class Document
     public function dir(): string
     {
         return pathinfo($this->path, PATHINFO_DIRNAME);
+    }
+
+    public function isFresh(): bool
+    {
+        return $this->fresh;
     }
 }

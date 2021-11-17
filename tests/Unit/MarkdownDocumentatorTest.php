@@ -34,7 +34,6 @@ class MarkdownDocumentatorTest extends TestCase
 
 |  Command Description  | Command Signature  | Frequency |
 | ------------ | ------------ | ------------ |
-
 | test command description  | test-command  | Every minute (* * * * *)  |\n", $result->get());
     }
 }

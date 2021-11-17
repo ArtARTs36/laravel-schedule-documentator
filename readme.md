@@ -4,8 +4,12 @@
 
 ### Installation
 
-Run command: `composer require artarts36/laravel-schedule-documentator`
+Run commands: 
 
+`composer require artarts36/laravel-schedule-documentator`
+
+`php artisan vendor:publish --provider="ArtARTs36\LaravelScheduleDocumentator\Providers\LaravelScheduleDocumentatorProvider" --tag=config
+`
 ---
 
 ### Simple generation:

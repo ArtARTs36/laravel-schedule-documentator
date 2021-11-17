@@ -7,7 +7,7 @@ use ArtARTs36\LaravelScheduleDocumentator\Contracts\DocumentContent;
 use ArtARTs36\LaravelScheduleDocumentator\Data\EventCollection;
 use ArtARTs36\LaravelScheduleDocumentator\Data\EventData;
 use ArtARTs36\LaravelScheduleDocumentator\Data\StringDocumentContent;
-use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Filesystem\Filesystem;
 
 class CsvDocumentator extends AbstractDocumentator implements Documentator
 {

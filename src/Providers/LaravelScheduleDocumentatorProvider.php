@@ -2,19 +2,28 @@
 
 namespace ArtARTs36\LaravelScheduleDocumentator\Providers;
 
+use ArtARTs36\CiGitSender\Action\SendAction;
+use ArtARTs36\CiGitSender\Commit\Message;
+use ArtARTs36\CiGitSender\Factory\SenderFactory;
+use ArtARTs36\CiGitSender\Remote\Credentials;
 use ArtARTs36\LaravelScheduleDocumentator\Console\Commands\GenerateDocCommand;
 use ArtARTs36\LaravelScheduleDocumentator\Contracts\DataFetcher;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\CsvDocumentator;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\DocumentatorFactory;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\MarkdownDocumentator;
+use ArtARTs36\LaravelScheduleDocumentator\Services\DocGenerateHandler;
 use ArtARTs36\LaravelScheduleDocumentator\Services\FromKernelDataFetcher;
-use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Container\Container;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Factory;
 
+/**
+ * @property Container $container
+ */
 class LaravelScheduleDocumentatorProvider extends ServiceProvider
 {
-    public $bindings = [
+    public array $bindings = [
         DataFetcher::class => FromKernelDataFetcher::class,
     ];
 
@@ -24,6 +33,7 @@ class LaravelScheduleDocumentatorProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands(GenerateDocCommand::class);
+
             $this->publishSelfPackage();
         }
 
@@ -38,7 +48,7 @@ class LaravelScheduleDocumentatorProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../../config/schedule_doc.php' => config_path('schedule_doc.php'),
-        ], 'schedule_doc');
+        ], 'config');
     }
 
     protected function registerDocumentatorFactory(): void
