@@ -18,4 +18,15 @@ return [
             'separator' => ';',
         ],
     ],
+    'git' => [
+        'bin' => 'git',
+        'dir' => base_path(),
+        'remote' => [
+            'login' => 'my-login',
+            'token' => env('SCHEDULE_DOCUMENTATOR_GIT_TOKEN', ''),
+        ],
+        'commit' => [
+            'message' => '[DOCS] Build schedule documentation',
+        ],
+    ],
 ];

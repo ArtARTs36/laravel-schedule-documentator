@@ -2,6 +2,10 @@
 
 namespace ArtARTs36\LaravelScheduleDocumentator\Providers;
 
+use ArtARTs36\CiGitSender\Action\SendAction;
+use ArtARTs36\CiGitSender\Commit\Message;
+use ArtARTs36\CiGitSender\Factory\SenderFactory;
+use ArtARTs36\CiGitSender\Remote\Credentials;
 use ArtARTs36\LaravelScheduleDocumentator\Console\Commands\GenerateDocCommand;
 use ArtARTs36\LaravelScheduleDocumentator\Contracts\DataFetcher;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\CsvDocumentator;
@@ -24,6 +28,21 @@ class LaravelScheduleDocumentatorProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands(GenerateDocCommand::class);
+
+            $this
+                ->app
+                ->when(GenerateDocCommand::class)
+                ->needs(SendAction::class)
+                ->give(function () {
+                    $config = config('schedule_doc.git');
+
+                    return new SendAction(
+                        SenderFactory::local($config['bin'])
+                            ->create($config['dir'], Credentials::fromArray($config['remote'])),
+                        new Message($config['commit']['message'])
+                    );
+                });
+
             $this->publishSelfPackage();
         }
 
