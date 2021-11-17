@@ -8,7 +8,7 @@ use ArtARTs36\LaravelScheduleDocumentator\Documentators\CsvDocumentator;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\DocumentatorFactory;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\MarkdownDocumentator;
 use ArtARTs36\LaravelScheduleDocumentator\Services\FromKernelDataFetcher;
-use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Factory;
 

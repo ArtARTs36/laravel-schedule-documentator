@@ -5,7 +5,7 @@ namespace ArtARTs36\LaravelScheduleDocumentator\Documentators;
 use ArtARTs36\LaravelScheduleDocumentator\Contracts\Documentator;
 use ArtARTs36\LaravelScheduleDocumentator\Data\Document;
 use ArtARTs36\LaravelScheduleDocumentator\Data\EventCollection;
-use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Filesystem\Filesystem;
 
 abstract class AbstractDocumentator implements Documentator
 {
@@ -23,8 +23,10 @@ abstract class AbstractDocumentator implements Documentator
 
     protected function saveContent(string $path, string $content): Document
     {
+        $prevHash = $this->files->exists($path) ? $this->files->hash($path) : '';
+
         $this->files->put($path, $content);
 
-        return new Document($path);
+        return new Document($path, $prevHash !== $this->files->hash($path));
     }
 }
