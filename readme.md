@@ -1,6 +1,6 @@
 ## Laravel Schedule Documentator
 
----
+This package provides automatic generation of documentation for your app schedule 
 
 ### Installation
 
@@ -8,8 +8,8 @@ Run commands:
 
 `composer require artarts36/laravel-schedule-documentator`
 
-`php artisan vendor:publish --provider="ArtARTs36\LaravelScheduleDocumentator\Providers\LaravelScheduleDocumentatorProvider" --tag=config
-`
+`php artisan vendor:publish --provider="ArtARTs36\LaravelScheduleDocumentator\Providers\LaravelScheduleDocumentatorProvider" --tag=config`
+
 ---
 
 ### Simple generation:
@@ -62,4 +62,3 @@ $generator->handle('csv', '/path/to/file.csv');
         ],
     ]
 ```
-
