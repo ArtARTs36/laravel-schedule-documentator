@@ -57,7 +57,7 @@ class LaravelScheduleDocumentatorProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../../config/schedule_doc.php' => config_path('schedule_doc.php'),
-        ], 'schedule_doc');
+        ], 'config');
     }
 
     protected function registerDocumentatorFactory(): void
