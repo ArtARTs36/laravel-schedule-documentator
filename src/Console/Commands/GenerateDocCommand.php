@@ -16,8 +16,16 @@ class GenerateDocCommand extends Command
     {
         $doc = $generator->handle($this->argument('format'), $this->argument('path'));
 
-        if ($this->option('ci') && $doc->isFresh()) {
-            $ci->send($doc->path());
+        if ($doc->isFresh()) {
+            $this->info('Documentation updated');
+
+            if ($this->option('ci')) {
+                $ci->send($doc->path());
+
+                $this->info('Documentation committed');
+            }
+        } else {
+            $this->info('Documentation is actually');
         }
     }
 }
