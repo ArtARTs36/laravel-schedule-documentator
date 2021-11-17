@@ -11,6 +11,7 @@ use ArtARTs36\LaravelScheduleDocumentator\Contracts\DataFetcher;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\CsvDocumentator;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\DocumentatorFactory;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\MarkdownDocumentator;
+use ArtARTs36\LaravelScheduleDocumentator\Services\DocGenerateHandler;
 use ArtARTs36\LaravelScheduleDocumentator\Services\FromKernelDataFetcher;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
@@ -29,19 +30,24 @@ class LaravelScheduleDocumentatorProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands(GenerateDocCommand::class);
 
+            $callCommand = function (GenerateDocCommand $command) {
+                $config = config('schedule_doc.git');
+
+                $action = new SendAction(
+                    SenderFactory::local($config['bin'])
+                        ->create($config['dir'], Credentials::fromArray($config['remote'])),
+                    new Message($config['commit']['message'])
+                );
+
+                $command->handle($this->app->make(DocGenerateHandler::class), $action);
+            };
+
             $this
                 ->app
-                ->when(GenerateDocCommand::class)
-                ->needs(SendAction::class)
-                ->give(function () {
-                    $config = config('schedule_doc.git');
-
-                    return new SendAction(
-                        SenderFactory::local($config['bin'])
-                            ->create($config['dir'], Credentials::fromArray($config['remote'])),
-                        new Message($config['commit']['message'])
-                    );
-                });
+                ->bindMethod(
+                    'ArtARTs36\LaravelScheduleDocumentator\Console\Commands\GenerateDocCommand@handle',
+                    $callCommand
+                );
 
             $this->publishSelfPackage();
         }

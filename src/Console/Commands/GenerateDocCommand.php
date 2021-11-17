@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 
 class GenerateDocCommand extends Command
 {
-    protected $signature = 'schedule:doc {format} {path} [--ci}';
+    protected $signature = 'schedule:doc {format} {path} {--ci}';
 
     protected $description = 'Generate doc for schedule events';
 
