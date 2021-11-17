@@ -13,13 +13,17 @@ use ArtARTs36\LaravelScheduleDocumentator\Documentators\DocumentatorFactory;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\MarkdownDocumentator;
 use ArtARTs36\LaravelScheduleDocumentator\Services\DocGenerateHandler;
 use ArtARTs36\LaravelScheduleDocumentator\Services\FromKernelDataFetcher;
+use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Factory;
 
+/**
+ * @property Container $container
+ */
 class LaravelScheduleDocumentatorProvider extends ServiceProvider
 {
-    public $bindings = [
+    public array $bindings = [
         DataFetcher::class => FromKernelDataFetcher::class,
     ];
 
@@ -29,25 +33,6 @@ class LaravelScheduleDocumentatorProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands(GenerateDocCommand::class);
-
-            $callCommand = function (GenerateDocCommand $command) {
-                $config = config('schedule_doc.git');
-
-                $action = new SendAction(
-                    SenderFactory::local($config['bin'])
-                        ->create($config['dir'], Credentials::fromArray($config['remote'])),
-                    new Message($config['commit']['message'])
-                );
-
-                $command->handle($this->app->make(DocGenerateHandler::class), $action);
-            };
-
-            $this
-                ->app
-                ->bindMethod(
-                    'ArtARTs36\LaravelScheduleDocumentator\Console\Commands\GenerateDocCommand@handle',
-                    $callCommand
-                );
 
             $this->publishSelfPackage();
         }

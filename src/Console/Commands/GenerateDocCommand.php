@@ -2,8 +2,8 @@
 
 namespace ArtARTs36\LaravelScheduleDocumentator\Console\Commands;
 
-use ArtARTs36\CiGitSender\Action\SendAction;
 use ArtARTs36\LaravelScheduleDocumentator\Services\DocGenerateHandler;
+use ArtARTs36\LaravelScheduleDocumentator\Services\ConfigSendActionFactory;
 use Illuminate\Console\Command;
 
 class GenerateDocCommand extends Command
@@ -12,7 +12,7 @@ class GenerateDocCommand extends Command
 
     protected $description = 'Generate doc for schedule events';
 
-    public function handle(DocGenerateHandler $generator, SendAction $ci)
+    public function handle(DocGenerateHandler $generator, ConfigSendActionFactory $ci)
     {
         $doc = $generator->handle($this->argument('format'), $this->argument('path'));
 
@@ -20,7 +20,7 @@ class GenerateDocCommand extends Command
             $this->info('Documentation updated');
 
             if ($this->option('ci')) {
-                $ci->send($doc->path());
+                $ci->create()->send($doc->path());
 
                 $this->info('Documentation committed');
             }
