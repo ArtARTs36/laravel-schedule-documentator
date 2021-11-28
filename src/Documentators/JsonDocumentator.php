@@ -15,6 +15,9 @@ class JsonDocumentator extends AbstractDocumentator implements Documentator
         return new StringDocumentContent(json_encode($this->eventsToArray($events), JSON_PRETTY_PRINT));
     }
 
+    /**
+     * @return array<string, array<string, string>>
+     */
     public function eventsToArray(EventCollection $events): array
     {
         return [

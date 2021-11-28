@@ -8,22 +8,17 @@ use ArtARTs36\LaravelScheduleDocumentator\Documentators\CsvDocumentator;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\DocumentatorFactory;
 use ArtARTs36\LaravelScheduleDocumentator\Documentators\MarkdownDocumentator;
 use ArtARTs36\LaravelScheduleDocumentator\Services\FromKernelDataFetcher;
-use Illuminate\Container\Container;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Factory;
 
-/**
- * @property Container $container
- */
 class LaravelScheduleDocumentatorProvider extends ServiceProvider
 {
-    public array $bindings = [
-        DataFetcher::class => FromKernelDataFetcher::class,
-    ];
-
     public function register()
     {
+        $this->app->bind(DataFetcher::class, FromKernelDataFetcher::class);
+
         $this->mergeConfigFrom(__DIR__ . '/../../config/schedule_doc.php', 'schedule_doc');
 
         if ($this->app->runningInConsole()) {
@@ -42,34 +37,34 @@ class LaravelScheduleDocumentatorProvider extends ServiceProvider
     protected function publishSelfPackage(): void
     {
         $this->publishes([
-            __DIR__ . '/../../config/schedule_doc.php' => config_path('schedule_doc.php'),
+            __DIR__ . '/../../config/schedule_doc.php' => $this->app->configPath('schedule_doc.php'),
         ], 'config');
     }
 
     protected function registerDocumentatorFactory(): void
     {
-        $this->app->bind(DocumentatorFactory::class, function () {
-            return new DocumentatorFactory($this->app, config('schedule_doc.ext_documentator'));
+        $this->app->bind(DocumentatorFactory::class, static function (Container $container) {
+            return new DocumentatorFactory($container, $container->get('config')->get('schedule_doc.ext_documentator'));
         });
     }
 
     protected function registerMarkdownDocumentator(): void
     {
-        $this->app->bind(MarkdownDocumentator::class, function () {
+        $this->app->bind(MarkdownDocumentator::class, static function (Container $container) {
             return new MarkdownDocumentator(
-                $this->app->make(Filesystem::class),
-                $this->app->make(Factory::class),
-                config('schedule_doc.documentators.markdown.template')
+                $container->make(Filesystem::class),
+                $container->make(Factory::class),
+                $container->get('config')->get('schedule_doc.documentators.markdown.template')
             );
         });
     }
 
     protected function registerCsvDocumentator(): void
     {
-        $this->app->bind(CsvDocumentator::class, function () {
+        $this->app->bind(CsvDocumentator::class, static function (Container $container) {
             return new CsvDocumentator(
-                $this->app->make(Filesystem::class),
-                config('schedule_doc.documentators.csv.separator')
+                $container->make(Filesystem::class),
+                $container->get('config')->get('schedule_doc.documentators.csv.separator')
             );
         });
     }
