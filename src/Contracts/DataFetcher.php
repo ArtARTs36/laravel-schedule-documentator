@@ -6,5 +6,8 @@ use ArtARTs36\LaravelScheduleDocumentator\Data\EventCollection;
 
 interface DataFetcher
 {
+    /**
+     * Fetch events
+     */
     public function fetch(FriendlySchedule $schedule): EventCollection;
 }
