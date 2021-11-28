@@ -52,7 +52,7 @@ $generator->handle('csv', '/path/to/file.csv');
 
 ### Add Custom Format
 
-1. Need create new Documentator (by contract \ArtARTs36\LaravelScheduleDocumentator\Contracts\Documentator)
+1. Create new Documentator (by contract \ArtARTs36\LaravelScheduleDocumentator\Contracts\Documentator)
 2. Add entry "extension/documentator" into config/schedule_doc.php in field "ext_documentator"
 ```php
     [
@@ -62,3 +62,11 @@ $generator->handle('csv', '/path/to/file.csv');
         ],
     ]
 ```
+
+---
+
+### Command Description
+
+Must fill property `description` in console commands for full documentation.
+
+Use the [PHP CS Fixer rule](https://github.com/ArtARTs36/php-cs-fixer-good-fixers) `PhpCsFixerGoodFixers/laravel_command_no_empty_description` to prevent undescribed commands from entering your repository.  
