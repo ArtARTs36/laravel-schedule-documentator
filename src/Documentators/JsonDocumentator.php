@@ -16,7 +16,7 @@ class JsonDocumentator extends AbstractDocumentator implements Documentator
     }
 
     /**
-     * @return array<string, array<string, string>>
+     * @return array<string, array<array<string, array<string, string>>>>
      */
     public function eventsToArray(EventCollection $events): array
     {
