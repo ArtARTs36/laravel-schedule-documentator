@@ -42,5 +42,12 @@
         "psr-4": {
             "ArtARTs36\\LaravelScheduleDocumentator\\Tests\\": "tests"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ArtARTs36\\LaravelScheduleDocumentator\\Providers\\LaravelScheduleDocumentatorProvider"
+            ]
+        }
     }
 }
